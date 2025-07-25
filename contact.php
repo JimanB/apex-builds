@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             max-width: 800px;
             margin: 2rem auto;
+             
         }
         .form-group {
             margin-bottom: 1.5rem;
@@ -153,9 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <h3>Our Location: Erie Hall</h3>
              <iframe
                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2950.7512094283857!2d-83.06786832321188!3d42.30517377119814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883b2d76fb7a6d77%3A0x75c782520849e124!2sErie%20Hall!5e0!3m2!1sen!2sca!4v1753318359030!5m2!1sen!2sca" 
-                   width="100%" 
                    height="450" 
-                   style="border:0;" 
+                   style="width:100%; border:0;" 
                    allowfullscreen="" 
                    loading="lazy" 
                    referrerpolicy="no-referrer-when-downgrade">

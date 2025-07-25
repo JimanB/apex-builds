@@ -40,4 +40,5 @@ session_start();
             </div>
             <div class="hamburger-menu">&#9776;</div>
         </div>
+    </div>
 </header>

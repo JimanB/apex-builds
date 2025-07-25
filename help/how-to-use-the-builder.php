@@ -55,6 +55,13 @@
             margin-top: 1rem;
             font-weight: bold;
         }
+
+        .responsive-video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
     </style>
 
 </head>
@@ -76,7 +83,7 @@
                     <p>On the left side of the PC Builder page, you'll see a list of component categories like
                         "Processor," "Graphics Card," and "Memory." Click on the dropdown menu for each category to see
                         the available options and their prices. Simply select the part you want for each category.</p>
-                    <video width="100%" autoplay loop muted>
+                    <video class="responsive-video" autoplay loop muted>
                         <source src="../media/builder-tutorial_1.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -85,7 +92,7 @@
                     <h2>Step 2: Watch Your Quote Update in Real-Time</h2>
                     <p>As you select components, look at the "Estimated Quote" box on the right. The total price will
                         automatically update with every change you make. There's no need to refresh the page!</p>
-                    <video width="100%" autoplay loop muted>
+                    <video class="responsive-video" autoplay loop muted>
                         <source src="../media/builder-tutorial_2.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -95,7 +102,7 @@
                     <p>Below the total price, you'll find a "View in:" dropdown. You can select USD or EURO to see an
                         approximate price in that currency, based on live exchange rates. This is for estimation
                         purposes only.</p>
-                    <video width="100%" autoplay loop muted>
+                    <video class="responsive-video" autoplay loop muted>
                         <source src="../media/builder-tutorial_3.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>

@@ -1,0 +1,106 @@
+/*
+    Apex Builds - Minimalist Light Theme (light.css)
+    this file provides a clean, bright, and professional alternative theme.
+*/
+
+/*redefine the core color and font variables*/
+@import url('style.css');
+:root {
+    --primary-bg-color: #f8f9fa;
+    /*very light grey background*/
+    --secondary-bg-color: #ffffff;
+    /*white for cards and headers*/
+    --accent-color: #074d97;
+    /*a vibrant blue*/
+    --primary-text-color: #1377e2;
+    /*headings*/
+    --secondary-text-color: #1ba9d4;
+    /*body text*/
+    --hover-color: #0056b3;
+    /*a darker blue for hover*/
+    --border-color: #dee2e6;
+    /*light grey for borders*/
+
+    /*fonts remain the same, loaded from the HTML file*/
+    --font-main: 'Roboto', sans-serif;
+    --font-heading: 'Orbitron', sans-serif;
+}
+
+/*remove or reset effects from other themes*/
+
+/*ensure no text-shadow is applied from other themes*/
+h1,
+h2,
+h3,
+.logo,
+a {
+    text-shadow: none;
+}
+
+.logo {
+    color: var(--primary-text-color);
+    /*headings already get this, but being explicit for the logo*/
+}
+
+/*use standard box-shadow for a subtle lift effect*/
+.product-card,
+.component-selector,
+.quote-summary {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/*use a clear outline for focused inputs instead of a shadow*/
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid var(--accent-color);
+    box-shadow: none;
+}
+
+/*specific adjustments for light mode*/
+
+/*the call-to-action button should have solid colors*/
+.cta-button {
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: none;
+}
+
+.cta-button:hover {
+    background-color: var(--hover-color);
+    box-shadow: none;
+    transform: translateY(-2px);
+}
+
+/*make links use the accent color*/
+a {
+    color: var(--accent-color);
+}
+
+a:hover {
+    color: var(--hover-color);
+}
+
+/*make the hero video brighter and ensure text on top is dark*/
+.hero-video {
+    filter: brightness(0.9) grayscale(40%);
+}
+
+.hero-content h1,
+.hero-content p {
+    color: var(--primary-text-color);
+}
+
+/*the hero CTA button needs to stand out against the bright background*/
+.hero .cta-button {
+    background-color: var(--primary-text-color);
+    color: white;
+}
+
+.hero .cta-button:hover {
+    background-color: #000;
+}

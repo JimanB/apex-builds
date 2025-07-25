@@ -1,0 +1,119 @@
+@import url('style.css');
+/*
+    Apex Builds - Synthwave Theme Stylesheet (synthwave.css)
+    this file overrides the default styles to create a retro 80s look.
+*/
+
+/*redefine the core color and font variables*/
+
+:root {
+    --primary-bg-color: #120d21;
+    /*very dark purple*/
+    --secondary-bg-color: #241a42;
+    /*lighter purple for cards*/
+    --accent-color: #ff00ff;
+    /*magenta/hot pink*/
+    --primary-text-color: #00e5ff;
+    /*cyan/electric blue*/
+    --secondary-text-color: #e0d8ff;
+    /*light lavender*/
+    --hover-color: #ff00ff;
+    /*magenta on hover*/
+    --border-color: #a000a0;
+    /*darker magenta*/
+
+    /*fonts are already loaded, just referencing them*/
+    --font-main: 'Roboto', sans-serif;
+    --font-heading: 'Orbitron', sans-serif;
+}
+
+
+/*add special effects for the synthwave vibe*/
+
+/*add a retro grid background to the entire page*/
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image:
+        linear-gradient(to right, rgba(160, 0, 160, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(160, 0, 160, 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+    /*place it behind all content*/
+    pointer-events: none;
+    /*make it unclickable*/
+}
+
+/*add neon glow to all headings*/
+h1,
+h2,
+h3,
+.logo {
+    text-shadow:
+        0 0 5px var(--primary-text-color),
+        0 0 10px var(--primary-text-color),
+        0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+.logo {
+    color: var(--primary-text-color);
+}
+
+/*make the call-to-action button glow*/
+.cta-button {
+    color: var(--secondary-bg-color);
+    background-color: var(--primary-text-color);
+    box-shadow: 0 0 10px var(--primary-text-color);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    color: var(--secondary-bg-color);
+    box-shadow: 0 0 20px var(--primary-text-color), 0 0 30px var(--primary-text-color);
+    transform: translateY(-3px) scale(1.05);
+}
+
+/*make links and selected text glow with the accent color*/
+a,
+a:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+/*make cards and inputs have a glowing border on hover/focus*/
+.product-card,
+.component-selector,
+.quote-summary,
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 10px rgba(160, 0, 160, 0.5);
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover,
+.component-selector:hover,
+.quote-summary:hover {
+    box-shadow: 0 0 15px var(--border-color);
+}
+
+/*ensure the hero video overlay is darker to let the text pop*/
+.hero-video {
+    filter: brightness(0.2);
+}
+
+/*hero title needs a stronger glow*/
+.hero-content h1 {
+    color: white;
+    text-shadow:
+        0 0 7px #fff,
+        0 0 10px #fff,
+        0 0 21px #fff,
+        0 0 42px var(--accent-color),
+        0 0 82px var(--accent-color),
+        0 0 92px var(--accent-color);
+}

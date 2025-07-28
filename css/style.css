@@ -1,0 +1,483 @@
+/*
+    Apex Builds - Default Dark Stylesheet (style.css)
+    Author: Jimaan Singh Bajwa
+    Date: July 1, 2025
+*/
+
+/* :root contains all the variables for our default theme.
+   this makes it easy to change the site's color scheme. 
+*/
+:root {
+    --primary-bg-color: #1a1a2e;
+    /*background*/
+    --secondary-bg-color: #16213e;
+    /*card background*/
+    --accent-color: #0f3460;
+    /*a deeper blue for accents*/
+    --primary-text-color: #e94560;
+    /*a vibrant red-pink for headings/highlights*/
+    --secondary-text-color: #dcdcdc;
+    /*light grey for body text*/
+    --hover-color: #e94560;
+    /*color for links on hover*/
+    --border-color: #0f3460;
+    --font-main: 'Roboto', sans-serif;
+    --font-heading: 'Orbitron', sans-serif;
+}
+
+/*global styles*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--primary-text-color);
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--primary-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+/*header and navigation*/
+header {
+    background-color: var(--secondary-bg-color);
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+}
+
+.logo:hover {
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    font-weight: 700;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+/*theme switcher*/
+.theme-switcher {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switcher label {
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#theme-select {
+    background-color: var(--accent-color);
+    color: var(--secondary-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0.3rem;
+    cursor: pointer;
+}
+
+/*mobile menu icon - hidden on desktop*/
+.hamburger-menu {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/*main content*/
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/*hero section*/
+.hero {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    filter: brightness(0.4);
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: white;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-text-color);
+    color: var(--primary-bg-color);
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-bg-color);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/*featured products section*/
+.featured-products {
+    margin-top: 4rem;
+}
+
+.featured-products h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    color: var(--primary-text-color);
+}
+
+footer {
+    background-color: var(--secondary-bg-color);
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    border-top: 2px solid var(--border-color);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    /*allows columns to stack on small screens*/
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+    margin: 0.5rem;
+}
+
+#weather-widget {
+    font-size: 0.9rem;
+}
+
+/*builder page styles*/
+
+.builder-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.help-link {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--secondary-text-color);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 1rem;
+}
+
+.help-link:hover {
+    background-color: var(--primary-text-color);
+    color: var(--primary-bg-color);
+    text-decoration: none;
+}
+
+.builder-container {
+    display: flex;
+    flex-wrap: wrap;
+    /*allows items to wrap to the next line on small screens*/
+    gap: 2rem;
+}
+
+.component-selector {
+    flex: 3;
+    /*takes up 3 parts of the space*/
+    min-width: 300px;
+    background-color: var(--secondary-bg-color);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.component-row {
+    margin-bottom: 1.5rem;
+}
+
+.component-row label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-text-color);
+}
+
+.component-row select {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.quote-summary {
+    flex: 2;
+    /*takes up 2 parts of the space*/
+    min-width: 300px;
+    background-color: var(--secondary-bg-color);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    /*makes the quote summary stick on screen as you scroll*/
+    top: 100px;
+    /*offset by header height*/
+    height: fit-content;
+}
+
+.price-display {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.price-display p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+#total-price {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--primary-text-color);
+    font-weight: bold;
+}
+
+.currency-converter {
+    margin-bottom: 2rem;
+}
+
+.currency-converter label {
+    margin-right: 0.5rem;
+}
+
+.currency-converter select {
+    padding: 0.3rem;
+    background-color: var(--accent-color);
+    color: var(--secondary-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+#converted-price-display {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.quote-summary .cta-button {
+    width: 100%;
+    text-align: center;
+}
+
+/*responsive design*/
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        /*hide nav links*/
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        /*height of the header*/
+        left: 0;
+        background-color: var(--secondary-bg-color);
+    }
+
+    /*this class will be toggled with javascript*/
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .hamburger-menu {
+        display: block;
+        /*show hamburger icon*/
+    }
+
+    .theme-switcher {
+        display: none;
+        /*optionally hide theme switcher on mobile to save space*/
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+}
+/*cart icon styles*/
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    /*space between cart, theme switcher, etc.*/
+}
+
+.cart-icon-container {
+    position: relative;
+    color: var(--secondary-text-color);
+    transition: color 0.3s ease;
+}
+
+.cart-icon-container:hover {
+    color: var(--primary-text-color);
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-text-color);
+    color: var(--primary-bg-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*auto hide header effects*/
+header.header-hidden {
+    transform: translateY(-100%);
+}
+/*full screen video background*/
+#background-video {
+    position: fixed;
+    /*fixes it in place*/
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -100;
+    /*puts it behind everything else*/
+    filter: brightness(0.3);
+    /*dims the video to make text readable*/
+}

@@ -14,7 +14,7 @@ $success_message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //get and sanitize user input
     $username = trim($_POST['username']);
-    $nickname = trim($_POST['nickname']); // This line was missing
+    $nickname = trim($_POST['nickname']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
@@ -75,16 +75,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Register | Apex Builds</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="js/main.js" defer></script>
 
     <style>
         .content-container { max-width: 600px; margin: 2rem auto; background-color: var(--secondary-bg-color); padding: 2rem; border-radius: 8px; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
-        .form-group input { width: 100%; padding: 0.8rem; background-color: var(--primary-bg-color); color: var(--secondary-text-color); border: 1px solid var(--border-color); border-radius: 5px; font-size: 1rem; }
+        .form-group input { width: 100%; box-sizing: border-box; padding: 0.8rem; background-color: var(--primary-bg-color); color: var(--secondary-text-color); border: 1px solid var(--border-color); border-radius: 5px; font-size: 1rem; }
         .feedback-success, .feedback-error { margin-bottom: 1.5rem; padding: 1rem; border-radius: 5px; text-align: center; font-weight: bold; }
         .feedback-success { background-color: #2a9d8f; color: white; }
         .feedback-error { background-color: #e76f51; color: white; }
+            /*password container styles*/
+        .password-container { position: relative; width: 100%; }
+        /*input field styling crucial for hiding default icons*/
+        .password-container input[type="password"],
+        .password-container input[type="text"] {
+            width: 100%;
+            padding-right: 35px; /*space for our custom icon*/
+            box-sizing: border-box;
+            /*disable browser's default password toggle*/
+            &::-ms-reveal,
+            &::-ms-clear,
+            &::-webkit-contacts-auto-fill-button,
+            &::-webkit-credentials-auto-fill-button {
+                display: none !important;
+                visibility: hidden !important;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        /*custom eye icon styling with blue color*/
+        .password-container .fa-eye,
+        .password-container .fa-eye-slash {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #4285f4; /*blue color*/
+            z-index: 2;
+            font-size: 1rem;
+            opacity: 0.8; /*slightly transparent by default*/
+            transition: all 0.2s ease;
+        }
+
+        .password-container .fa-eye:hover,
+        .password-container .fa-eye-slash:hover {
+            opacity: 1;
+            color: #3367d6; /*slightly darker blue on hover*/
+        }
     </style>
 </head>
 <body>
@@ -119,20 +160,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password (min. 8 characters)</label>
+                <label for="password">Password (min. 8 characters)</label>
+                <div class="password-container">
                     <input type="password" id="password" name="password" required>
-                    <div class="show-password-container">
-                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> Show Password
-                    </div>
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
                 </div>
-                <div class="form-group">
-                    <label for="password_confirm">Confirm Password</label>
+            </div>
+            <div class="form-group">
+                <label for="password_confirm">Confirm Password</label>
+                <div class="password-container">
                     <input type="password" id="password_confirm" name="password_confirm" required>
-                    <div class="show-password-container">
-                        <input type="checkbox" onclick="togglePasswordVisibility('password_confirm')"> Show Password
-                    </div>
+                    <i class="fa-solid fa-eye" id="togglePasswordConfirm"></i>
                 </div>
-
+            </div>
                 <button type="submit" class="cta-button">Register</button>
             </form>
             <p style="margin-top: 1rem;">Already have an account? <a href="login.php">Log in here</a>.</p>

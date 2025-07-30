@@ -36,25 +36,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //verify the submitted password against the stored hash
             if (password_verify($password, $user['password_hash'])) {
-                //correct password
-                //regenerate session ID to prevent session fixation attacks
+                //password is correct
                 session_regenerate_id(true);
 
-                //store user data in the session.
+                //store user data in the session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['nickname'] = $user['nickname'];
                 $_SESSION['role'] = $user['role'];
 
-                //redirect to a profile page (we will create this later)
+                //redirect to a profile page
                 header("Location: profile.php");
-                exit(); //important to prevent further script execution
+                exit(); 
             } else {
-                //incorrect password
                 $errors[] = 'Invalid username or password.';
             }
         } else {
-            //no user found or account is inactive
             $errors[] = 'Invalid username or password.';
         }
         $stmt->close();
@@ -70,19 +67,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login | Apex Builds</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="js/main.js" defer></script>
 
     <style>
         .content-container { max-width: 600px; margin: 2rem auto; background-color: var(--secondary-bg-color); padding: 2rem; border-radius: 8px; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
-        .form-group input { width: 100%; padding: 0.8rem; background-color: var(--primary-bg-color); color: var(--secondary-text-color); border: 1px solid var(--border-color); border-radius: 5px; font-size: 1rem; }
+        .form-group input { width: 100%; box-sizing: border-box; padding: 0.8rem; background-color: var(--primary-bg-color); color: var(--secondary-text-color); border: 1px solid var(--border-color); border-radius: 5px; font-size: 1rem; }
         .feedback-error { margin-bottom: 1.5rem; padding: 1rem; border-radius: 5px; text-align: center; font-weight: bold; background-color: #e76f51; color: white; }
+        
+        /*password container styles*/
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        /*input field styling - hides default browser icons*/
+        .password-container input[type="password"],
+        .password-container input[type="text"] {
+            width: 100%;
+            padding-right: 35px;
+            box-sizing: border-box;
+        }
+        
+        /*hide browser's default password toggle*/
+        .password-container input::-ms-reveal,
+        .password-container input::-ms-clear,
+        .password-container input::-webkit-contacts-auto-fill-button,
+        .password-container input::-webkit-credentials-auto-fill-button {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0;
+            height: 0;
+        }
+
+        /*custom eye icon styling with blue color*/
+        .password-container .fa-eye,
+        .password-container .fa-eye-slash {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #4285f4; /*blue color*/
+            z-index: 2;
+            font-size: 1rem;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+        }
+
+        .password-container .fa-eye:hover,
+        .password-container .fa-eye-slash:hover {
+            opacity: 1;
+            color: #3367d6; /*slightly darker blue on hover*/
+        }
     </style>
 </head>
 <body>
-
-        <?php require_once 'php/header.php'; ?>
+    <?php require_once 'php/header.php'; ?>
 
     <main>
         <div class="content-container">
@@ -101,11 +144,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
-               <div class="form-group">
+                <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                    <div class="show-password-container">
-                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> Show Password
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" required>
+                        <i class="fa-solid fa-eye" id="togglePassword"></i>
                     </div>
                 </div>
                 <button type="submit" class="cta-button">Log In</button>
@@ -114,8 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 
-        <?php require_once 'php/footer.php'; ?>
-
-    
+    <?php require_once 'php/footer.php'; ?>
 </body>
 </html>

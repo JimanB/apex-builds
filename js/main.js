@@ -521,3 +521,19 @@ window.addEventListener('scroll', function () {
     //for Mobile or negative scrolling
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 }, false);
+
+/**
+ * toggles the visibility of a password field.
+ * @param {string} fieldId - The ID of the password input field to toggle.
+ */
+function togglePasswordVisibility(fieldId) {
+    const passwordField = document.getElementById(fieldId);
+    if (passwordField) {
+        //if the field is currently of type 'password', change it to 'text', and vice-versa
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+}

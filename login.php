@@ -101,9 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
-                <div class="form-group">
+               <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
+                    <div class="show-password-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> Show Password
+                    </div>
                 </div>
                 <button type="submit" class="cta-button">Log In</button>
             </form>

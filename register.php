@@ -1,25 +1,25 @@
 <?php
-// register.php
+//register.php
 
-// Include the database connection file.
+//include the database connection file
 require_once 'php/db_connect.php';
 
-// Start a session to manage user login state.
+//start a session to manage user login state
 session_start();
 
 $errors = [];
 $success_message = '';
 
-// Check if the form has been submitted.
+//check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get and sanitize user input.
+    //get and sanitize user input
     $username = trim($_POST['username']);
     $nickname = trim($_POST['nickname']); // This line was missing
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
 
-    // --- Validation ---
+    //validation
     if (empty($username)) {
         $errors[] = 'Username is required.';
     }
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = 'Passwords do not match.';
     }
 
-    // If there are no validation errors, proceed to check the database.
+    //if there are no validation errors, proceed to check the database
     if (empty($errors)) {
         $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
         $stmt->bind_param("ss", $username, $email);
@@ -121,11 +121,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label for="password">Password (min. 8 characters)</label>
                     <input type="password" id="password" name="password" required>
+                    <div class="show-password-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> Show Password
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="password_confirm">Confirm Password</label>
                     <input type="password" id="password_confirm" name="password_confirm" required>
+                    <div class="show-password-container">
+                        <input type="checkbox" onclick="togglePasswordVisibility('password_confirm')"> Show Password
+                    </div>
                 </div>
+
                 <button type="submit" class="cta-button">Register</button>
             </form>
             <p style="margin-top: 1rem;">Already have an account? <a href="login.php">Log in here</a>.</p>

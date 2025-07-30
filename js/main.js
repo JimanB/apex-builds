@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //global initalizatoins
     initializeThemeSwitcher();
     initializeMobileMenu();
+    initializePasswordToggles();
     fetchWeather(); //fetches weather for the footer widget
     updateCartIconCount();
 
@@ -522,18 +523,25 @@ window.addEventListener('scroll', function () {
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 }, false);
 
-/**
- * toggles the visibility of a password field.
- * @param {string} fieldId - The ID of the password input field to toggle.
- */
-function togglePasswordVisibility(fieldId) {
-    const passwordField = document.getElementById(fieldId);
-    if (passwordField) {
-        //if the field is currently of type 'password', change it to 'text', and vice-versa
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
-        }
-    }
+function initializePasswordToggles() {
+    const setupToggle = (iconId, fieldId) => {
+        const icon = document.getElementById(iconId);
+        const field = document.getElementById(fieldId);
+
+        if (!icon || !field) return;
+
+        icon.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (field.type === "password") {
+                field.type = "text";
+                this.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                field.type = "password";
+                this.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+    };
+
+    setupToggle('togglePassword', 'password');
+    setupToggle('togglePasswordConfirm', 'password_confirm');
 }

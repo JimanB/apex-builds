@@ -23,21 +23,6 @@ $username = $_SESSION['username'];
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        body { font-family: Roboto, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; }
-        .admin-header { background-color: #212529; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .admin-header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin: 0; }
-        .admin-header a { color: #f8f9fa; text-decoration: none; margin-left: 1.5rem; }
-        .admin-header a:hover { text-decoration: underline; }
-        .content-container { max-width: 1200px; margin: 2rem auto; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
-        .menu-panel, .chart-panel { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .admin-menu { list-style: none; padding: 0; }
-        .admin-menu li { margin-bottom: 1rem; }
-        .admin-menu a { display: block; background-color: #f8f9fa; padding: 1rem; border-radius: 5px; text-decoration: none; color: #333; font-weight: bold; }
-        .admin-menu a:hover { background-color: #007bff; color: white; }
-    </style>
 </head>
 <body>
     <header class="admin-header">
@@ -57,13 +42,25 @@ $username = $_SESSION['username'];
             <h1>Admin Dashboard</h1>
             <p>Welcome, <?php echo htmlspecialchars($username); ?>!</p>
             
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h2>Total Orders</h2>
+                    <p id="total-orders">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Revenue</h2>
+                    <p id="total-revenue">Loading...</p>
+                </div>
+            </div>
+            
             <div class="dashboard-grid">
                 <div class="menu-panel">
                     <h2>Navigation</h2>
                     <ul class="admin-menu">
                         <li><a href="products.php">Manage Products</a></li>
                         <li><a href="users.php">Manage Users</a></li>
-                        <li><a href="messages.php">View Messages</a></li> <li><a href="status.php">Website Status</a></li>
+                        <li><a href="messages.php">View Messages</a></li>
+                        <li><a href="status.php">Website Status</a></li>
                         <li><a href="../index.php">Return to Main Site</a></li>
                     </ul>
                 </div>
@@ -79,8 +76,18 @@ $username = $_SESSION['username'];
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         fetch('../php/api_admin_stats.php')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
+                //update stat cards
+                document.getElementById('total-orders').textContent = data.total_orders;
+                document.getElementById('total-revenue').textContent = '$' + parseFloat(data.total_revenue).toFixed(2);
+
+                //build the chart
                 const productStats = data.products_per_category;
                 const labels = productStats.map(item => item.category);
                 const counts = productStats.map(item => item.product_count);
@@ -98,20 +105,34 @@ $username = $_SESSION['username'];
                             borderWidth: 1
                         }]
                     },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { stepSize: 1 }
-                            }
-                        }
-                    }
+                    options: { scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
                 });
             })
-            .catch(error => console.error('Error fetching chart data:', error));
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+                document.getElementById('total-orders').textContent = 'Error';
+                document.getElementById('total-revenue').textContent = 'Error';
+            });
     });
     </script>
     
-    
+    <style>
+        body { font-family: Roboto, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; }
+        .admin-header { background-color: #212529; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin: 0; }
+        .admin-header a { color: #f8f9fa; text-decoration: none; margin-left: 1.5rem; }
+        .admin-header a:hover { text-decoration: underline; }
+        .content-container { max-width: 1200px; margin: 2rem auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stat-card h2 { margin-top: 0; }
+        .stat-card p { font-size: 2rem; font-weight: bold; margin-bottom: 0; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+        .menu-panel, .chart-panel { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .admin-menu { list-style: none; padding: 0; }
+        .admin-menu li { margin-bottom: 1rem; }
+        .admin-menu a { display: block; background-color: #f8f9fa; padding: 1rem; border-radius: 5px; text-decoration: none; color: #333; font-weight: bold; }
+        .admin-menu a:hover { background-color: #007bff; color: white; }
+    </style>
 </body>
 </html>

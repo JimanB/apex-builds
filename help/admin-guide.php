@@ -42,10 +42,13 @@
 
             <div class="component-definitions">
                 <h2>Accessing the Admin Dashboard</h2>
-                <p>To access the admin panel, your account's 'role' must be set to 'admin' in the database. Once logged in as an admin, you can navigate directly to the <code>/admin/</code> directory to access the dashboard. You must first be logged into to the website before following the provided link to the admin site.</p>
-
+                <p>To access the admin panel, your account's 'role' must be set to 'admin' in the database. 
+                To access the admin site, you can simply navigate to your profile page and click on the button that will redirect you to the site.
+                Alternatively, you can navigate directly to the <code>/admin/</code> directory in the URL to access the dashboard. 
+                You must first be logged into the website before following the provided link to the admin site; if you choose to go through the URL.</p>
+                
                 <h2>Managing Products</h2>
-                <p>From the "Manage Products" page, you have full control over the product catalog (Create, Read, Update, Delete).</p>
+                <p>From the "Manage Products" page, you have full control over the product catalogue (Create, Read, Update, Delete).</p>
                 <ul>
                     <li><strong>Add Product:</strong> Click the "Add New Product" link and fill out all fields in the form. The image path must correspond to a file uploaded to the <code>/images/</code> folder.</li>
                     <li><strong>Edit Product:</strong> Click the "Edit" link next to any product. The form will be pre-filled with the existing data. Make your changes and click "Update Product".</li>

@@ -73,47 +73,38 @@ $username = $_SESSION['username'];
         </div>
     </main>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('../php/api_admin_stats.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                //update stat cards
-                document.getElementById('total-orders').textContent = data.total_orders;
-                document.getElementById('total-revenue').textContent = '$' + parseFloat(data.total_revenue).toFixed(2);
+       <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                fetch('../php/api_admin_stats.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        //update stat cards
+                        document.getElementById('total-orders').textContent = data.total_orders;
+                        document.getElementById('total-revenue').textContent = '$' + parseFloat(data.total_revenue).toFixed(2);
 
-                //build the chart
-                const productStats = data.products_per_category;
-                const labels = productStats.map(item => item.category);
-                const counts = productStats.map(item => item.product_count);
+                        //build the chart with new stock data
+                        const productStats = data.products_per_category;
+                        const labels = productStats.map(item => item.category);
+                        const counts = productStats.map(item => item.total_stock); //use total_stock now
 
-                const ctx = document.getElementById('productsChart').getContext('2d');
-                const productsChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: '# of Products',
-                            data: counts,
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching dashboard data:', error);
-                document.getElementById('total-orders').textContent = 'Error';
-                document.getElementById('total-revenue').textContent = 'Error';
+                        const ctx = document.getElementById('productsChart').getContext('2d');
+                        const productsChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                label: 'Total Items in Stock',//new label
+                                data: counts,
+                                backgroundColor: 'rgba(75, 192, 192, 0.5)',//turquoise colour
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                            },
+                            options: { scales: { y: { beginAtZero: true } } }
+                        });
+                    })
+                    .catch(error => console.error('Error fetching dashboard data:', error));
             });
-    });
     </script>
     
     <style>

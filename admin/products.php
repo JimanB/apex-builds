@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 require_once '../php/db_connect.php';
 
 //fetch all products from the database to display them
-$sql = "SELECT * FROM products ORDER BY category, name";
+$sql = "SELECT * FROM products ORDER BY FIELD(category, 'CPU', 'GPU', 'Motherboard', 'RAM', 'SSD', 'Cooler', 'PSU', 'Case', 'Fans', 'OS', 'HDD', 'Monitor', 'Keyboard', 'Mouse', 'Headset', 'Webcam', 'Microphone', 'Speakers', 'Wifi', 'Cables'), name ASC";
 $result = $conn->query($sql);
 $products = [];
 if ($result && $result->num_rows > 0) {

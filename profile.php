@@ -4,7 +4,7 @@
 //includes session_start() and the main site header
 require_once 'php/header.php'; 
 
-//redirect to login if user is not logged in.
+//redirect to login if user is not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_address'])) {
         $feedback_message = 'Address updated successfully!';
         $feedback_class = 'feedback-success';
     } else {
-        $feedback_message = 'Error updating address.';
+        $feedback_message = 'Error updating address';
         $feedback_class = 'feedback-error';
     }
     $stmt->close();
@@ -56,6 +56,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     while ($order = $result->fetch_assoc()) {
+        //for each order, fetch its individual items
         $item_stmt = $conn->prepare("SELECT product_name, product_price FROM order_items WHERE order_id = ?");
         $item_stmt->bind_param("i", $order['id']);
         $item_stmt->execute();
@@ -91,8 +92,14 @@ $conn->close();
 
     <main>
         <div class="content-container">
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <div class="admin-link-container">
+                    <a href="admin/index.php" class="cta-button" target="_blank" rel="noopener noreferrer">Go to Admin Dashboard</a>
+                </div>
+            <?php endif; ?>
+            
             <h1>Welcome, <?php echo htmlspecialchars($display_name); ?>!</h1>
-            <p>Here you can manage your shipping details and view your order history.</p>
+            <p>Here you can manage your shipping details and view your order history</p>
 
             <hr class="divider">
 
@@ -135,7 +142,7 @@ $conn->close();
             <h2>Your Order History</h2>
 
             <?php if (empty($orders)): ?>
-                <p>You have not placed any orders yet.</p>
+                <p>You have not placed any orders yet</p>
             <?php else: ?>
                 <?php foreach ($orders as $order): ?>
                     <div class="order-card">
@@ -176,6 +183,7 @@ $conn->close();
         .feedback-message { padding: 1rem; margin-bottom: 1.5rem; border-radius: 5px; font-weight: bold; text-align: center; }
         .feedback-success { background-color: #2a9d8f; color: white; }
         .feedback-error { background-color: #e76f51; color: white; }
+        .admin-link-container { text-align: right; margin-bottom: 1rem; }
     </style>
 </body>
 </html>

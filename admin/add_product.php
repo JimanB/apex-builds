@@ -26,32 +26,35 @@ if ($result && $result->num_rows > 0) {
 
 //check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
+    //get form data
     $category_data = explode('|', $_POST['category']);
     $category = trim($category_data[0]);
     $displayName = trim($category_data[1]);
     
     $name = trim($_POST['name']);
     $price = trim($_POST['price']);
+    $stock_quantity = (int)$_POST['stock_quantity']; //get stock quantity
     $image = trim($_POST['image']);
 
     //basic validation
-    if (empty($category) || empty($displayName) || empty($name) || empty($price) || empty($image)) {
-        $errors[] = "All fields are required.";
+    if (empty($category) || empty($displayName) || empty($name) || !isset($_POST['price']) || !isset($_POST['stock_quantity']) || empty($image)) {
+        $errors[] = "All fields are required";
     }
     if (!is_numeric($price) || $price < 0) {
-        $errors[] = "Price must be a valid positive number.";
+        $errors[] = "Price must be a valid positive number";
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO products (category, displayName, name, price, image) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $category, $displayName, $name, $price, $image);
+        //use a prepared statement to prevent sql injection
+        $stmt = $conn->prepare("INSERT INTO products (category, displayName, name, price, stock_quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
+        //bind parameters with 'i' for integer stock
+        $stmt->bind_param("ssssis", $category, $displayName, $name, $price, $stock_quantity, $image);
 
         if ($stmt->execute()) {
             header("Location: products.php?status=added");
             exit();
         } else {
-            $errors[] = "Error adding product to the database.";
+            $errors[] = "Error adding product to the database";
         }
         $stmt->close();
     }
@@ -92,6 +95,7 @@ $conn->close();
                         <?php endforeach; ?>
                     </select>
                 </div>
+                
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" id="name" name="name" required>
@@ -99,6 +103,10 @@ $conn->close();
                 <div class="form-group">
                     <label for="price">Price</label>
                     <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock_quantity">Stock Quantity</label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" value="0" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Image Path (e.g., images/new_product.png)</label>

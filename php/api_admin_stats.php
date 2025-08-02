@@ -16,7 +16,7 @@ require_once 'db_connect.php';
 $stats = [];
 
 //get count of products per category
-$sql_products = "SELECT category, COUNT(*) as product_count FROM products GROUP BY category ORDER BY product_count DESC";
+$sql_products = "SELECT category, SUM(stock_quantity) as total_stock FROM products GROUP BY category ORDER BY total_stock DESC";
 $result_products = $conn->query($sql_products);
 $product_stats = [];
 if ($result_products) {
